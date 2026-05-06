@@ -7,12 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v1.0.0] - 2026-04-07
+## [v1.0.0] - 2026-05-06
 
 ### Added
 
-- Initial schema definition with fields: `iceberg:catalog_type`, `iceberg:table_id`,
-  `iceberg:format_version`, `iceberg:current_snapshot_id`, `iceberg:catalog_uri`,
-  `iceberg:partition_spec`.
-- Example STAC Collection with BigLake REST catalog.
+- Initial schema definition with fields: `partition:scheme`, `partition:strategy`,
+  `partition:keys`, `partition:file_count`, `partition:glob` (asset-level).
+- Example collections: kdtree spatial partitioning, H3 grid partitioning, multi-key
+  temporal+spatial partitioning.
+- Consumer code examples for DuckDB and PyArrow.
 - GitHub Actions workflows for CI validation and GitHub Pages publishing.

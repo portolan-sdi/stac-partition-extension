@@ -1,0 +1,61 @@
+{
+  "type": "Collection",
+  "id": "buildings",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/table/v1.2.0/schema.json",
+    "https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json"
+  ],
+  "title": "OpenStreetMap Buildings",
+  "description": "Building footprints extracted from OpenStreetMap, spatially partitioned using KD-tree for efficient regional queries.",
+  "license": "ODbL-1.0",
+  "extent": {
+    "spatial": {
+      "bbox": [[-180, -90, 180, 90]]
+    },
+    "temporal": {
+      "interval": [["2024-01-01T00:00:00Z", null]]
+    }
+  },
+  "links": [
+    {
+      "rel": "root",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "self",
+      "href": "./collection.json",
+      "type": "application/json"
+    }
+  ],
+  "table:columns": [
+    { "name": "id", "type": "string" },
+    { "name": "name", "type": "string" },
+    { "name": "building_type", "type": "string" },
+    { "name": "height", "type": "float" },
+    { "name": "geometry", "type": "binary" },
+    { "name": "kdtree_cell", "type": "string" }
+  ],
+  "table:row_count": 12847293,
+  "table:primary_geometry": "geometry",
+  "partition:scheme": "hive",
+  "partition:strategy": "kdtree",
+  "partition:keys": [
+    {
+      "name": "kdtree_cell",
+      "type": "string",
+      "description": "KD-tree spatial partition cell identifier (e.g., '0_1_0_1')"
+    }
+  ],
+  "partition:file_count": 98,
+  "assets": {
+    "data": {
+      "href": "./kdtree_cell=0/*.parquet",
+      "type": "application/vnd.apache.parquet",
+      "roles": ["data"],
+      "partition:glob": "s3://example-bucket/buildings/kdtree_cell=*/*.parquet",
+      "description": "Partitioned GeoParquet files — use DuckDB or PyArrow with hive_partitioning=true"
+    }
+  }
+}

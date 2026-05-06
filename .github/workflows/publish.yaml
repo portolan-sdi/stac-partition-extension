@@ -28,12 +28,12 @@ jobs:
           cp json-schema/schema.json "_site/${VERSION}/"
 
           # Try to fetch existing versions manifest, default to empty array
-          if curl -sfL https://portolan-sdi.github.io/stac-iceberg-extension/versions.json -o /tmp/versions.json 2>/dev/null; then
+          if curl -sfL https://portolan-sdi.github.io/stac-partition-extension/versions.json -o /tmp/versions.json 2>/dev/null; then
             # Download each existing version's schema to preserve them
             for ver in $(jq -r '.[]' /tmp/versions.json 2>/dev/null); do
               if [ "$ver" != "$VERSION" ]; then
                 mkdir -p "_site/${ver}"
-                curl -sfL "https://portolan-sdi.github.io/stac-iceberg-extension/${ver}/schema.json" \
+                curl -sfL "https://portolan-sdi.github.io/stac-partition-extension/${ver}/schema.json" \
                   -o "_site/${ver}/schema.json" 2>/dev/null || true
               fi
             done
@@ -49,7 +49,7 @@ jobs:
           <!DOCTYPE html>
           <html>
           <head>
-            <title>STAC Iceberg Extension</title>
+            <title>STAC Partition Extension</title>
             <style>
               body { font-family: system-ui, sans-serif; max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
               h1 { color: #333; }
@@ -59,8 +59,8 @@ jobs:
             </style>
           </head>
           <body>
-            <h1>STAC Iceberg Extension</h1>
-            <p>JSON Schema for the <a href="https://github.com/portolan-sdi/stac-iceberg-extension">STAC Iceberg Extension</a>.</p>
+            <h1>STAC Partition Extension</h1>
+            <p>JSON Schema for the <a href="https://github.com/portolan-sdi/stac-partition-extension">STAC Partition Extension</a>.</p>
             <h2>Available Versions</h2>
             <ul id="versions"></ul>
             <script>

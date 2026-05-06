@@ -1,0 +1,60 @@
+{
+  "type": "Collection",
+  "id": "poi-global",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/table/v1.2.0/schema.json",
+    "https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json"
+  ],
+  "title": "Global Points of Interest",
+  "description": "Points of interest partitioned by H3 resolution 3 cells for multi-scale analysis.",
+  "license": "CC-BY-4.0",
+  "extent": {
+    "spatial": {
+      "bbox": [[-180, -90, 180, 90]]
+    },
+    "temporal": {
+      "interval": [["2024-01-01T00:00:00Z", null]]
+    }
+  },
+  "links": [
+    {
+      "rel": "root",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "self",
+      "href": "./collection.json",
+      "type": "application/json"
+    }
+  ],
+  "table:columns": [
+    { "name": "id", "type": "string" },
+    { "name": "name", "type": "string" },
+    { "name": "category", "type": "string" },
+    { "name": "geometry", "type": "binary" },
+    { "name": "h3_cell", "type": "string" }
+  ],
+  "table:row_count": 48291034,
+  "table:primary_geometry": "geometry",
+  "partition:scheme": "hive",
+  "partition:strategy": "h3",
+  "partition:keys": [
+    {
+      "name": "h3_cell",
+      "type": "string",
+      "description": "H3 cell index at resolution 3"
+    }
+  ],
+  "partition:file_count": 41162,
+  "assets": {
+    "data": {
+      "href": "./h3_cell=830000fffffffff/*.parquet",
+      "type": "application/vnd.apache.parquet",
+      "roles": ["data"],
+      "partition:glob": "gs://geodata-bucket/poi-global/h3_cell=*/*.parquet",
+      "description": "H3-partitioned GeoParquet — each partition covers one H3 res-3 cell"
+    }
+  }
+}

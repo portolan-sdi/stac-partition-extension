@@ -1,0 +1,72 @@
+{
+  "type": "Collection",
+  "id": "sensor-readings",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/table/v1.2.0/schema.json",
+    "https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json"
+  ],
+  "title": "Environmental Sensor Readings",
+  "description": "Time-series sensor data partitioned by year, month, and region for efficient temporal and spatial queries.",
+  "license": "CC0-1.0",
+  "extent": {
+    "spatial": {
+      "bbox": [[-125, 24, -66, 50]]
+    },
+    "temporal": {
+      "interval": [["2020-01-01T00:00:00Z", "2024-12-31T23:59:59Z"]]
+    }
+  },
+  "links": [
+    {
+      "rel": "root",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "self",
+      "href": "./collection.json",
+      "type": "application/json"
+    }
+  ],
+  "table:columns": [
+    { "name": "sensor_id", "type": "string" },
+    { "name": "timestamp", "type": "timestamp[us]" },
+    { "name": "temperature", "type": "float" },
+    { "name": "humidity", "type": "float" },
+    { "name": "geometry", "type": "binary" },
+    { "name": "year", "type": "int32" },
+    { "name": "month", "type": "int32" },
+    { "name": "region", "type": "string" }
+  ],
+  "table:row_count": 892341567,
+  "table:primary_geometry": "geometry",
+  "partition:scheme": "hive",
+  "partition:keys": [
+    {
+      "name": "year",
+      "type": "int32",
+      "description": "Year of observation (2020-2024)"
+    },
+    {
+      "name": "month",
+      "type": "int32",
+      "description": "Month of observation (1-12)"
+    },
+    {
+      "name": "region",
+      "type": "string",
+      "description": "Geographic region code (e.g., 'us-west', 'us-east')"
+    }
+  ],
+  "partition:file_count": 720,
+  "assets": {
+    "data": {
+      "href": "./year=2024/month=1/region=us-west/*.parquet",
+      "type": "application/vnd.apache.parquet",
+      "roles": ["data"],
+      "partition:glob": "s3://sensor-data/readings/year=*/month=*/region=*/*.parquet",
+      "description": "Multi-key partitioned Parquet — filter by year, month, and/or region for partition pruning"
+    }
+  }
+}

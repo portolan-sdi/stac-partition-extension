@@ -2,4 +2,4 @@ plugins:
   - remark-preset-lint-consistent
   - remark-preset-lint-recommended
   - - remark-validate-links
-    - repository: "https://github.com/portolan-sdi/stac-iceberg-extension"
+    - repository: "https://github.com/portolan-sdi/stac-partition-extension"

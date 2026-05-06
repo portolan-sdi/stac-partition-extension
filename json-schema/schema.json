@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://portolan-sdi.github.io/stac-iceberg-extension/v1.0.0/schema.json#",
-  "title": "STAC Iceberg Extension",
-  "description": "Extends STAC Collections with Apache Iceberg table access and versioning metadata.",
+  "$id": "https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json#",
+  "title": "STAC Partition Extension",
+  "description": "Extends STAC Collections with Hive-style partition metadata for efficient querying of partitioned datasets.",
   "oneOf": [
     {
       "$comment": "This is the schema for STAC Collections.",
@@ -25,7 +25,7 @@
           "$comment": "Top-level fields in a Collection.",
           "allOf": [
             {
-              "required": ["iceberg:catalog_type", "iceberg:table_id"]
+              "required": ["partition:scheme", "partition:keys"]
             },
             {
               "$ref": "#/definitions/fields"
@@ -43,7 +43,7 @@
         "stac_extensions": {
           "type": "array",
           "contains": {
-            "const": "https://portolan-sdi.github.io/stac-iceberg-extension/v1.0.0/schema.json"
+            "const": "https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json"
           }
         }
       }
@@ -51,45 +51,53 @@
     "fields": {
       "type": "object",
       "properties": {
-        "iceberg:catalog_type": {
+        "partition:scheme": {
           "type": "string",
-          "enum": ["sql", "rest", "glue", "hive", "dynamodb"],
-          "description": "Iceberg catalog backend type"
+          "enum": ["hive", "directory"],
+          "description": "Partitioning scheme. 'hive' uses key=value directory naming; 'directory' uses plain subdirectories."
         },
-        "iceberg:catalog_uri": {
+        "partition:strategy": {
           "type": "string",
-          "description": "Connection URI for the Iceberg catalog"
+          "enum": ["kdtree", "h3", "s2", "quadkey", "a5", "temporal", "attribute"],
+          "description": "Algorithm or method used to determine partition boundaries."
         },
-        "iceberg:table_id": {
-          "type": "string",
-          "description": "Fully qualified Iceberg table identifier (namespace.table)"
-        },
-        "iceberg:format_version": {
-          "type": "integer",
-          "enum": [1, 2],
-          "description": "Iceberg format version"
-        },
-        "iceberg:current_snapshot_id": {
-          "type": "integer",
-          "description": "Current snapshot ID for reproducibility"
-        },
-        "iceberg:partition_spec": {
+        "partition:keys": {
           "type": "array",
-          "description": "Iceberg partition fields and transforms",
+          "minItems": 1,
+          "description": "Partition key definitions in hierarchical order.",
           "items": {
             "type": "object",
-            "required": ["field", "transform"],
+            "required": ["name", "type"],
             "properties": {
-              "field": {
+              "name": {
                 "type": "string",
-                "description": "Source column name"
+                "description": "Column name used as partition key."
               },
-              "transform": {
+              "type": {
                 "type": "string",
-                "description": "Iceberg partition transform (identity, bucket, truncate, etc.)"
+                "enum": ["string", "int32", "int64", "date", "timestamp"],
+                "description": "Data type of the partition key."
+              },
+              "description": {
+                "type": "string",
+                "description": "Human-readable description of the partition key."
               }
             }
           }
+        },
+        "partition:file_count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Total number of data files across all partitions."
+        }
+      }
+    },
+    "asset_fields": {
+      "type": "object",
+      "properties": {
+        "partition:glob": {
+          "type": "string",
+          "description": "Absolute glob pattern for bulk access to all partition files (e.g., s3://bucket/collection/key=*/*.parquet)."
         }
       }
     }
