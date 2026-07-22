@@ -4,7 +4,7 @@
   "stac_version": "1.0.0",
   "stac_extensions": [
     "https://stac-extensions.github.io/table/v1.2.0/schema.json",
-    "https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json"
+    "https://schemas.portolan-sdi.org/partition/v1.0.0/schema.json"
   ],
   "title": "OpenStreetMap Buildings",
   "description": "Building footprints extracted from OpenStreetMap, spatially partitioned using KD-tree for efficient regional queries.",

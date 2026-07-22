@@ -1,7 +1,7 @@
 # STAC Partition Extension
 
 - **Title:** Partition
-- **Identifier:** <https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json>
+- **Identifier:** <https://schemas.portolan-sdi.org/partition/v1.0.0/schema.json>
 - **Field Name Prefix:** partition
 - **Scope:** Collection, Asset
 - **[Extension Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions#extension-maturity):** Proposal
@@ -45,7 +45,7 @@ The [STAC Table Extension](https://github.com/stac-extensions/table) provides sc
   "id": "buildings",
   "stac_extensions": [
     "https://stac-extensions.github.io/table/v1.2.0/schema.json",
-    "https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json"
+    "https://schemas.portolan-sdi.org/partition/v1.0.0/schema.json"
   ],
   "partition:scheme": "hive",
   "partition:strategy": "kdtree",
