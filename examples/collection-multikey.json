@@ -11,10 +11,22 @@
   "license": "CC0-1.0",
   "extent": {
     "spatial": {
-      "bbox": [[-125, 24, -66, 50]]
+      "bbox": [
+        [
+          -125,
+          24,
+          -66,
+          50
+        ]
+      ]
     },
     "temporal": {
-      "interval": [["2020-01-01T00:00:00Z", "2024-12-31T23:59:59Z"]]
+      "interval": [
+        [
+          "2020-01-01T00:00:00Z",
+          "2024-12-31T23:59:59Z"
+        ]
+      ]
     }
   },
   "links": [
@@ -30,14 +42,38 @@
     }
   ],
   "table:columns": [
-    { "name": "sensor_id", "type": "string" },
-    { "name": "timestamp", "type": "timestamp[us]" },
-    { "name": "temperature", "type": "float" },
-    { "name": "humidity", "type": "float" },
-    { "name": "geometry", "type": "binary" },
-    { "name": "year", "type": "int32" },
-    { "name": "month", "type": "int32" },
-    { "name": "region", "type": "string" }
+    {
+      "name": "sensor_id",
+      "type": "string"
+    },
+    {
+      "name": "timestamp",
+      "type": "timestamp[us]"
+    },
+    {
+      "name": "temperature",
+      "type": "float"
+    },
+    {
+      "name": "humidity",
+      "type": "float"
+    },
+    {
+      "name": "geometry",
+      "type": "binary"
+    },
+    {
+      "name": "year",
+      "type": "int32"
+    },
+    {
+      "name": "month",
+      "type": "int32"
+    },
+    {
+      "name": "region",
+      "type": "string"
+    }
   ],
   "table:row_count": 892341567,
   "table:primary_geometry": "geometry",
@@ -60,13 +96,15 @@
     }
   ],
   "partition:file_count": 720,
+  "partition:glob": "s3://sensor-data/readings/year=*/month=*/region=*/*.parquet",
   "assets": {
     "data": {
       "href": "./year=2024/month=1/region=us-west/*.parquet",
       "type": "application/vnd.apache.parquet",
-      "roles": ["data"],
-      "partition:glob": "s3://sensor-data/readings/year=*/month=*/region=*/*.parquet",
-      "description": "Multi-key partitioned Parquet — filter by year, month, and/or region for partition pruning"
+      "roles": [
+        "data"
+      ],
+      "description": "Multi-key partitioned Parquet \u2014 filter by year, month, and/or region for partition pruning"
     }
   }
 }

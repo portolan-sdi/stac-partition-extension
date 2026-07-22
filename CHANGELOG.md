@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `partition:glob` moved from asset-level to collection-level and is now
+  **required**, alongside `partition:scheme` and `partition:keys`. The glob
+  describes bulk access to the whole collection, and an asset-level home forced a
+  synthetic glob-href asset that cannot satisfy per-file requirements (such as the
+  Portolan profile's `file:size`/`file:checksum`). Extension scope narrows to
+  Collection only; the unused asset-level definition is removed.
 - Canonical schema URI moved from
   `https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json` to
   `https://schemas.portolan-sdi.org/partition/v1.0.0/schema.json`, following the
