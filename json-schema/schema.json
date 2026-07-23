@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json#",
+  "$id": "https://schemas.portolan-sdi.org/incubating/partition/v1.0.0/schema.json#",
   "title": "STAC Partition Extension",
   "description": "Extends STAC Collections with Hive-style partition metadata for efficient querying of partitioned datasets.",
   "oneOf": [
@@ -25,7 +25,7 @@
           "$comment": "Top-level fields in a Collection.",
           "allOf": [
             {
-              "required": ["partition:scheme", "partition:keys"]
+              "required": ["partition:scheme", "partition:keys", "partition:glob"]
             },
             {
               "$ref": "#/definitions/fields"
@@ -43,7 +43,7 @@
         "stac_extensions": {
           "type": "array",
           "contains": {
-            "const": "https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json"
+            "const": "https://schemas.portolan-sdi.org/incubating/partition/v1.0.0/schema.json"
           }
         }
       }
@@ -89,15 +89,11 @@
           "type": "integer",
           "minimum": 1,
           "description": "Total number of data files across all partitions."
-        }
-      }
-    },
-    "asset_fields": {
-      "type": "object",
-      "properties": {
+        },
         "partition:glob": {
           "type": "string",
-          "description": "Absolute glob pattern for bulk access to all partition files (e.g., s3://bucket/collection/key=*/*.parquet)."
+          "minLength": 1,
+          "description": "Glob pattern for bulk access to all partition data files (e.g., https://example.org/collection/*/*.parquet or s3://bucket/collection/key=*/*.parquet)."
         }
       }
     }

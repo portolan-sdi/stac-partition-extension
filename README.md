@@ -1,9 +1,9 @@
 # STAC Partition Extension
 
 - **Title:** Partition
-- **Identifier:** <https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json>
+- **Identifier:** <https://schemas.portolan-sdi.org/incubating/partition/v1.0.0/schema.json>
 - **Field Name Prefix:** partition
-- **Scope:** Collection, Asset
+- **Scope:** Collection
 - **[Extension Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions#extension-maturity):** Proposal
 
 This extension adds Hive-style partition metadata to STAC Collections, enabling clients to discover partition structure and construct efficient queries using DuckDB, PyArrow, or other partition-aware readers.
@@ -22,6 +22,7 @@ The [STAC Table Extension](https://github.com/stac-extensions/table) provides sc
 | partition:strategy | string | No | Algorithm used: `kdtree`, `h3`, `s2`, `quadkey`, `a5`, `temporal`, `attribute` |
 | partition:keys | \[object\] | **Yes** | Partition key definitions (see below) |
 | partition:file_count | integer | No | Total number of data files across all partitions |
+| partition:glob | string | **Yes** | Glob pattern for bulk access to all partition data files (e.g., `https://example.org/col/*/*.parquet` or `s3://bucket/col/key=*/*.parquet`) |
 
 ### Partition Key Object
 
@@ -31,12 +32,6 @@ The [STAC Table Extension](https://github.com/stac-extensions/table) provides sc
 | type | string | **Yes** | Data type: `string`, `int32`, `int64`, `date`, `timestamp` |
 | description | string | No | Human-readable description |
 
-### Asset Fields
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| partition:glob | string | Absolute glob pattern for bulk access (e.g., `s3://bucket/col/key=*/*.parquet`) |
-
 ## Example
 
 ```json
@@ -45,7 +40,7 @@ The [STAC Table Extension](https://github.com/stac-extensions/table) provides sc
   "id": "buildings",
   "stac_extensions": [
     "https://stac-extensions.github.io/table/v1.2.0/schema.json",
-    "https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json"
+    "https://schemas.portolan-sdi.org/incubating/partition/v1.0.0/schema.json"
   ],
   "partition:scheme": "hive",
   "partition:strategy": "kdtree",
@@ -57,14 +52,7 @@ The [STAC Table Extension](https://github.com/stac-extensions/table) provides sc
     }
   ],
   "partition:file_count": 98,
-  "assets": {
-    "data": {
-      "href": "./kdtree_cell=0/*.parquet",
-      "type": "application/vnd.apache.parquet",
-      "roles": ["data"],
-      "partition:glob": "s3://example-bucket/buildings/kdtree_cell=*/*.parquet"
-    }
-  }
+  "partition:glob": "s3://example-bucket/buildings/kdtree_cell=*/*.parquet"
 }
 ```
 

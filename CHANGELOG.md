@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- `partition:glob` moved from asset-level to collection-level and is now
+  **required**, alongside `partition:scheme` and `partition:keys`. The glob
+  describes bulk access to the whole collection, and an asset-level home forced a
+  synthetic glob-href asset that cannot satisfy per-file requirements (such as the
+  Portolan profile's `file:size`/`file:checksum`). Extension scope narrows to
+  Collection only; the unused asset-level definition is removed.
+- Canonical schema URI moved from
+  `https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json` to
+  `https://schemas.portolan-sdi.org/incubating/partition/v1.0.0/schema.json`, following the
+  Portolan schema-hosting convention: the profile under `/portolan/`, and
+  incubating extensions — hoped to graduate to `stac-extensions` once more widely
+  usable — under `/incubating/<name>/`. The schema
+  `$id`, the `stac_extensions` declaration it enforces, the README identifier, and
+  all examples now use the canonical URI.
+
 ## [v1.0.0] - 2026-05-06
 
 ### Added

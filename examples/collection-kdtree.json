@@ -4,17 +4,29 @@
   "stac_version": "1.0.0",
   "stac_extensions": [
     "https://stac-extensions.github.io/table/v1.2.0/schema.json",
-    "https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json"
+    "https://schemas.portolan-sdi.org/incubating/partition/v1.0.0/schema.json"
   ],
   "title": "OpenStreetMap Buildings",
   "description": "Building footprints extracted from OpenStreetMap, spatially partitioned using KD-tree for efficient regional queries.",
   "license": "ODbL-1.0",
   "extent": {
     "spatial": {
-      "bbox": [[-180, -90, 180, 90]]
+      "bbox": [
+        [
+          -180,
+          -90,
+          180,
+          90
+        ]
+      ]
     },
     "temporal": {
-      "interval": [["2024-01-01T00:00:00Z", null]]
+      "interval": [
+        [
+          "2024-01-01T00:00:00Z",
+          null
+        ]
+      ]
     }
   },
   "links": [
@@ -30,12 +42,30 @@
     }
   ],
   "table:columns": [
-    { "name": "id", "type": "string" },
-    { "name": "name", "type": "string" },
-    { "name": "building_type", "type": "string" },
-    { "name": "height", "type": "float" },
-    { "name": "geometry", "type": "binary" },
-    { "name": "kdtree_cell", "type": "string" }
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "building_type",
+      "type": "string"
+    },
+    {
+      "name": "height",
+      "type": "float"
+    },
+    {
+      "name": "geometry",
+      "type": "binary"
+    },
+    {
+      "name": "kdtree_cell",
+      "type": "string"
+    }
   ],
   "table:row_count": 12847293,
   "table:primary_geometry": "geometry",
@@ -49,13 +79,15 @@
     }
   ],
   "partition:file_count": 98,
+  "partition:glob": "s3://example-bucket/buildings/kdtree_cell=*/*.parquet",
   "assets": {
     "data": {
       "href": "./kdtree_cell=0/*.parquet",
       "type": "application/vnd.apache.parquet",
-      "roles": ["data"],
-      "partition:glob": "s3://example-bucket/buildings/kdtree_cell=*/*.parquet",
-      "description": "Partitioned GeoParquet files — use DuckDB or PyArrow with hive_partitioning=true"
+      "roles": [
+        "data"
+      ],
+      "description": "Partitioned GeoParquet files \u2014 use DuckDB or PyArrow with hive_partitioning=true"
     }
   }
 }
