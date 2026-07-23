@@ -17,9 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Collection only; the unused asset-level definition is removed.
 - Canonical schema URI moved from
   `https://portolan-sdi.github.io/stac-partition-extension/v1.0.0/schema.json` to
-  `https://schemas.portolan-sdi.org/partition/v1.0.0/schema.json`, following the
-  Portolan schema-hosting convention (one path segment per schema on
-  `schemas.portolan-sdi.org`, as with the profile under `/portolan/`). The schema
+  `https://schemas.portolan-sdi.org/incubating/partition/v1.0.0/schema.json`, following the
+  Portolan schema-hosting convention: the profile under `/portolan/`, and
+  incubating extensions — hoped to graduate to `stac-extensions` once more widely
+  usable — under `/incubating/<name>/`. The schema
   `$id`, the `stac_extensions` declaration it enforces, the README identifier, and
   all examples now use the canonical URI.
 
