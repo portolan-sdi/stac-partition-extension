@@ -110,6 +110,18 @@ Use Partition Extension for static partitioned Parquet/GeoParquet files. Use Ice
 | `temporal` | Date/time-based partitioning | Time series data |
 | `attribute` | Arbitrary column-based partitioning | Categorical data |
 
+## Schema Versions
+
+Every published version stays tracked in this repository under
+`json-schema/v<semver>/schema.json`. The v1.0.0 schema lives at
+`json-schema/v1.0.0/schema.json`.
+
+[schemas.portolan-sdi.org](https://schemas.portolan-sdi.org) serves the schema.
+The [portolan-spec](https://github.com/portolan-sdi/portolan-spec) publish
+workflow reads the pin in `stac/portolan-extensions.json`. The workflow then
+fetches the pinned version from this repository. This repository does not deploy
+its own GitHub Pages site.
+
 ## Building and Testing
 
 ```bash
