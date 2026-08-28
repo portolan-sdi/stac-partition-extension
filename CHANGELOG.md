@@ -23,6 +23,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   usable — under `/incubating/<name>/`. The schema
   `$id`, the `stac_extensions` declaration it enforces, the README identifier, and
   all examples now use the canonical URI.
+- Schema files move to a tracked-versions layout. `json-schema/schema.json`
+  becomes `json-schema/v1.0.0/schema.json`. Each future version adds a directory
+  and keeps the earlier files in the tree. The layout matches the portolan-spec
+  convention.
+
+### Removed
+
+- The `publish.yaml` workflow. This repository no longer deploys a GitHub Pages
+  site. The portolan-spec publish workflow fetches the pinned schema version and
+  serves it under `schemas.portolan-sdi.org`.
 
 ## [v1.0.0] - 2026-05-06
 
